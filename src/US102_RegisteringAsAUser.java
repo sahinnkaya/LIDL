@@ -22,6 +22,8 @@ public class US102_RegisteringAsAUser {
     public static void cookies(WebDriver driver) {
         WebElement cookiesButton = driver.findElement(By.xpath(" //button[@id='onetrust-accept-btn-handler'] "));
         cookiesButton.click();
+
+
     }
 
 
