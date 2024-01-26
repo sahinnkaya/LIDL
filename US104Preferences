@@ -1,0 +1,133 @@
+package US104;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+
+public class Preferences {
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to the Lidl website
+        driver.get("https://www.lidl.com/");
+
+        // Verify the homepage URL
+        if (driver.getCurrentUrl().equals("https://www.lidl.com/")) {
+            System.out.println("Homepage URL verification successful");
+        } else {
+            System.out.println("Homepage URL verification unsuccessful");
+        }
+
+        // Click on the "Login" link
+        WebElement loginLink = driver.findElement(By.xpath("//*[@id='nav']/div/nav[2]/ul/li[3]/a"));
+        loginLink.click();
+
+        // Wait for the username input field 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='input0']")));
+
+        // Find the username input field and enter the username
+        usernameInput.sendKeys("o.erdekli@gmail.com");
+
+        // Wait for the password input field 
+        WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='input1']")));
+
+        // Find the password input field and enter the password
+        passwordInput.sendKeys("Ogulcan2004");
+
+        // Click on the "sign in" link
+        WebElement signInButton = driver.findElement(By.xpath("//*[@id=\"main-content\"]/div[2]/div/div/form/div/button[5]"));
+        signInButton.click();
+
+        // Wait until the website has loaded
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Go to the account to access Preferences
+        WebElement accessPreferences = driver.findElement(By.xpath("//*[@id=\"nav\"]/div/nav[2]/ul/li[3]/span/button/span/span[1]"));
+        accessPreferences.click();
+
+        WebElement accessPreferences1 = driver.findElement(By.xpath("/html/body/div[5]/div[3]/ul/a[1]"));
+        accessPreferences1.click();
+
+        // Wait until the account has loaded
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Click the "Preferences" link 
+        List<WebElement> preferencesLinkList = driver.findElements(By.xpath("//*[@id='main-content']/div[2]/div/div/div/div[2]/ul/li[2]/a"));
+
+        if (preferencesLinkList.size() > 0) {
+            WebElement preferencesLink = preferencesLinkList.get(0);
+            preferencesLink.click();
+
+            // Select preferences such as Kid Friendly, Kosher, and Organic using radio buttons
+            WebElement kidFriendlyCheckbox = driver.findElement(By.xpath("//*[@id=\"main-content\"]/div[2]/div/div/div/div[2]/div/div/div/form/div[1]/div[1]/div/span/span[1]/span/input"));
+            WebElement kosherCheckbox = driver.findElement(By.xpath("//*[@id='main-content']/div[2]/div/div/div/div[2]/div/div/div/form/div[1]/div[2]/div/span/span[1]/span/input"));
+            WebElement organicCheckbox = driver.findElement(By.xpath("//*[@id='main-content']/div[2]/div/div/div/div[2]/div/div/div/form/div[1]/div[3]/div/span/span[1]/span/input"));
+
+            // Scroll to the checkboxes
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", kidFriendlyCheckbox);
+
+            // Click on checkboxes directly
+            kidFriendlyCheckbox.click();
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", kosherCheckbox);
+            kosherCheckbox.click();
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", organicCheckbox);
+            organicCheckbox.click();
+
+            // Check if checkboxes are selected
+            if (kidFriendlyCheckbox.isSelected()) {
+                System.out.println("Kid Friendly checkbox is selected");
+            }
+
+            if (kosherCheckbox.isSelected()) {
+                System.out.println("Kosher checkbox is selected");
+            }
+
+            if (organicCheckbox.isSelected()) {
+                System.out.println("Organic checkbox is selected");
+            }
+        }
+
+        // Scroll down using JavaScriptExecutor
+        scrollDown(driver);
+
+       
+        String elementID = "Save";
+        WebElement elementToClick = driver.findElement(By.xpath("//*[@id=\"main-content\"]/div[2]/div/div/div/div[2]/div/div/div/form/div[5]/button"));
+
+        // Click 
+        elementToClick.click();
+
+    }
+
+    private static void scrollDown(WebDriver driver) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Scroll down by pixels
+        js.executeScript("window.scrollBy(0,1500)");
+
+
+    }
+}
