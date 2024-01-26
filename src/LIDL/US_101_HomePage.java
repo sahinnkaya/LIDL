@@ -29,6 +29,7 @@ public class US_101_HomePage {
 
 
 
+
             String actualURL = driver.getCurrentUrl();
             String expectedURL = "https://www.lidl.com/";
 
